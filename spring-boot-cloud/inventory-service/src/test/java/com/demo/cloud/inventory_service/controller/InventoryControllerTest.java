@@ -35,8 +35,10 @@ public class InventoryControllerTest {
         final var result = inventoryController.updateStock(nbInput);
 
         // Then
-        verify(supplierClient, timeout(1)).restocking(anyInt());
+        verify(supplierClient, timeout(1)).restocking(anyInt()); // fixme
         assertTrue(Objects.requireNonNull(result.getBody()).contains(nbInput.toString()));
         assertTrue(Objects.requireNonNull(result.getBody()).contains(mockedSupplierResult));
     }
+
+    // TODO: add parameterized tests + argument captor
 }

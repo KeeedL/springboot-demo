@@ -16,12 +16,30 @@ management:
           - health
           - info
           - refresh # allow config server to send refresh data request to client using this data
+          - circuitbreakers
 
 eureka:
   client:
     register-with-eureka: true
     fetch-registry: true
+    registry-fetch-interval-seconds: 5
     serviceUrl:
       defaultZone: http://localhost:8761/eureka
   instance:
     preferIpAddress: true
+
+feign:
+  circuitbreaker:
+    enabled: true
+
+resilience4j:
+  circuitbreaker:
+    instances:
+      inventory-service:
+        sliding-window-size: 10                          # Nombre total d'appels à prendre en compte pour calculer le taux d'échec.
+        minimum-number-of-calls: 5                       # Nombre minimum d'appels nécessaires avant d'évaluer le taux d'échec.
+        failure-rate-threshold: 20                       # Taux d'échec en pourcentage (0-100) qui déclenche l'ouverture du circuit.
+        wait-duration-in-open-state: 10000               # Durée en millisecondes pendant laquelle le circuit restera ouvert avant de passer à l'état "half-open".
+        permitted-number-of-calls-in-half-open-state: 3  # Nombre d'appels permis dans l'état "half-open" pour tester si le service est de nouveau disponible.
+        slowCallRateThreshold: 50                        # Si 50% ou plus des appels dans la fenêtre glissante sont considérés comme lents, le circuit breaker passera en état "OPEN".
+        slowCallDurationThreshold: 5s                    # Un appel est considéré comme lent s'il prend plus de 2 secondes à s'exécuter.

@@ -1,0 +1,29 @@
+themes :
+
+demo-book :
+- JPA
+- controller <-> service <-> repository
+- mapping entity <-> dto (via map-struct)
+- AOP logging
+
+restdata :
+- spring data rest
+- event handler
+
+
+-- Spring cloud --
+
+config-server :
+- centralise et versionne les configurations d'apps
+
+discovery-server (eureka) :
+- permet  aux apps de s'enregistrer dynamiquement et de découvrir d'autres services dans un système distribué
+
+order-service :
+- feign-client
+- circuit-breaker
+
+inventory-service :
+- bean configuration
+- integration test (todo)
+- unit test

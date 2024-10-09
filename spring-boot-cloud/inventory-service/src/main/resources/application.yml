@@ -12,7 +12,7 @@ management:
         include:
           - health
           - info
-          - refresh # allow config server to send refresh data request to client using this data
+          - refresh # allow config server to send refresh data request to client using this data - fixme: should use queue
 eureka:
   client:
     register-with-eureka: true

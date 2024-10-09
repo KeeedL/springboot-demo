@@ -25,7 +25,7 @@ public class OrderController {
     @PostMapping
     public ResponseEntity<String> postOrder(@RequestBody Integer nb) {
         final var stockUpdated = inventoryClient.update(nb);
-        final var result = "Order placed successfully\r\n" + stockUpdated;
+        final var result = "Order placed successfully\r\nClient response is : " + stockUpdated;
         return ResponseEntity.status(HttpStatus.CREATED).body(result);
     }
 }
