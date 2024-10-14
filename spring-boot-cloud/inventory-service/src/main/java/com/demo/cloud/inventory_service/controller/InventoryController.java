@@ -35,4 +35,18 @@ public class InventoryController {
 
         return ResponseEntity.status(HttpStatus.OK).body("Updated stock is " + stock + "\r\n" + restockingResult);
     }
+
+
+    // Should not be there - useful for testing purpose
+
+    // custom method to show argument captor utility (test part)
+    public void updateStockCustomMethod(Integer nb) {
+        supplierClient.restocking(nb + 10); // 10 should go in constant file...
+    }
+
+    // custom method to show parameterized test utility (test part)
+    public boolean isValid(String input) {
+        // Exemple de regex qui n'accepte que des lettres (a-z, A-Z)
+        return input != null && input.matches("[a-zA-Z]+");
+    }
 }

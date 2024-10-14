@@ -13,6 +13,7 @@ public interface InventoryClient {
     @RequestMapping(method = RequestMethod.PUT, value = "${client.inventory-service.endpoints.stock}", consumes = "application/json")
     String update(@RequestBody Integer nb);
 
+    // TODO: Should be in specific fallback class
     default String fallbackUpdate(Integer nb, Exception e) {
         return "Inventory service not available - Fallback method used to update stock (kafka message)";
     }

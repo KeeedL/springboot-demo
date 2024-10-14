@@ -1,0 +1,8 @@
+spring:
+  application:
+    name: demo-book
+  datasource:
+    url: jdbc:h2:mem:demo-book-it
+    username: sa
+    password: password
+    driverClassName: org.h2.Driver
