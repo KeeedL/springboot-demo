@@ -5,6 +5,7 @@ demo-book :
 - controller <-> service <-> repository
 - mapping entity <-> dto (via map-struct)
 - AOP logging
+- integration test
 
 restdata :
 - spring data rest
@@ -25,5 +26,8 @@ order-service :
 
 inventory-service :
 - bean configuration
-- integration test (todo)
 - unit test
+
+
+TODO :
+- simple reactive project (storing data)

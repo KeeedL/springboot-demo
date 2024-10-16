@@ -9,5 +9,6 @@ import java.util.Optional;
 public interface AuthorService {
     AuthorEntity postAuthor(AuthorDto dto);
     List<AuthorEntity> getAuthors();
-    Optional<AuthorEntity> getAuthor(String firstName, String lastName);
+    Optional<AuthorEntity> getAuthorByNames(String firstName, String lastName);
+    Optional<AuthorEntity> getAuthorById(long id);
 }

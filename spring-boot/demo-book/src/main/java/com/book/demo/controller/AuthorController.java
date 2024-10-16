@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,6 +20,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import static com.book.demo.constant.RestPathValue.AUTHOR_PATH;
+import static com.book.demo.constant.RestPathValue.ID_PATH_PARAM;
 
 @RestController
 @RequestMapping(
@@ -38,7 +40,7 @@ public class AuthorController {
     // TODO: add pagination
     @Operation(summary = "Get authors")
     @ApiResponses(
-            @ApiResponse(responseCode = "200", description = "Return authors found")
+            @ApiResponse(responseCode = "200", description = "Return author objects")
     )
     @GetMapping
     ResponseEntity<List<AuthorDto>> getAuthors() {
@@ -47,6 +49,18 @@ public class AuthorController {
                         .map(mapper::toDto)
                         .collect(Collectors.toList())
         );
+    }
+
+    @Operation(summary = "Get author")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Return author object"),
+            @ApiResponse(responseCode = "404", description = "Author not found")
+    })
+    @GetMapping(ID_PATH_PARAM)
+    ResponseEntity<AuthorDto> getAuthor(@PathVariable final long id) {
+        return service.getAuthorById(id)
+                .map(entity -> ResponseEntity.status(HttpStatus.OK).body(mapper.toDto(entity)))
+                .orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).build());
     }
 
     @Operation(summary = "Post author")

@@ -87,7 +87,7 @@ public class DefaultBookService implements BookService {
                 );
 
         if(isNewAuthorToBook) {
-            final var existingAuthor = authorService.getAuthor(author.firstName(), author.lastName());
+            final var existingAuthor = authorService.getAuthorByNames(author.firstName(), author.lastName());
             existingAuthor.ifPresentOrElse(
                     book::addAuthor,
                     () -> book.addAuthor(authorService.postAuthor(author))

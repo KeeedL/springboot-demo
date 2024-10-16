@@ -32,7 +32,13 @@ public class DefaultAuthorService implements AuthorService {
     }
 
     @Override
-    public Optional<AuthorEntity> getAuthor(String firstName, String lastName) {
+    public Optional<AuthorEntity> getAuthorByNames(String firstName, String lastName) {
         return repository.findByFirstNameAndLastName(firstName, lastName);
     }
+
+    @Override
+    public Optional<AuthorEntity> getAuthorById(long id) {
+        return repository.findById(id);
+    }
+
 }
