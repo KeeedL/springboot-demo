@@ -43,7 +43,7 @@ public class AuthorController {
             @ApiResponse(responseCode = "200", description = "Return author objects")
     )
     @GetMapping
-    ResponseEntity<List<AuthorDto>> getAuthors() {
+    public ResponseEntity<List<AuthorDto>> getAuthors() {
         return ResponseEntity.ok(
                 service.getAuthors().stream()
                         .map(mapper::toDto)
@@ -57,7 +57,7 @@ public class AuthorController {
             @ApiResponse(responseCode = "404", description = "Author not found")
     })
     @GetMapping(ID_PATH_PARAM)
-    ResponseEntity<AuthorDto> getAuthor(@PathVariable final long id) {
+    public ResponseEntity<AuthorDto> getAuthor(@PathVariable final long id) {
         return service.getAuthorById(id)
                 .map(entity -> ResponseEntity.status(HttpStatus.OK).body(mapper.toDto(entity)))
                 .orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).build());
@@ -66,12 +66,12 @@ public class AuthorController {
     @Operation(summary = "Post author")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "Return author created"),
-            @ApiResponse(responseCode = "400", description = "Bad request - param type,  validation...")
+            @ApiResponse(responseCode = "409", description = "Author already existing")
     })
     @PostMapping
-    ResponseEntity<AuthorDto> postAuthor(@RequestBody AuthorDto dto) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(
-                mapper.toDto(service.postAuthor(dto))
-        );
+    public ResponseEntity<AuthorDto> postAuthor(@RequestBody AuthorDto dto) {
+        return service.postAuthor(dto)
+                .map(entity -> ResponseEntity.status(HttpStatus.CREATED).body(mapper.toDto(entity)))
+                .orElseGet(() -> ResponseEntity.status(HttpStatus.CONFLICT).build());
     }
 }

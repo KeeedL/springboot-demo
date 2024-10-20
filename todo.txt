@@ -18,7 +18,7 @@ config-server :
 - centralise et versionne les configurations d'apps
 
 discovery-server (eureka) :
-- permet  aux apps de s'enregistrer dynamiquement et de découvrir d'autres services dans un système distribué
+- permet  aux apps de s'enregistrer dynamiquement et de communiquer entre elles uniquement via leur nom d'appli (pas d'host à configurer dans les applis)
 
 order-service :
 - feign-client
@@ -31,3 +31,4 @@ inventory-service :
 
 TODO :
 - simple reactive project (storing data)
+- Kafka + avro

@@ -7,8 +7,9 @@ import java.util.List;
 import java.util.Optional;
 
 public interface AuthorService {
-    AuthorEntity postAuthor(AuthorDto dto);
+    Optional<AuthorEntity> postAuthor(AuthorDto dto);
     List<AuthorEntity> getAuthors();
     Optional<AuthorEntity> getAuthorByNames(String firstName, String lastName);
     Optional<AuthorEntity> getAuthorById(long id);
+    AuthorEntity createIfAbsent(AuthorDto authorDto);
 }

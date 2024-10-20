@@ -47,13 +47,13 @@ public class DefaultBookService implements BookService {
         if(entity.isPresent()) {
             mapper.toEntity(dto, entity.get());
 
-            // Remove authors
+            // Remove authors - should be done in BookAuthorService
             final var inputAuthorIds = dto.authors().stream()
                     .map(AuthorDto::id)
                     .collect(Collectors.toSet());
             entity.get().getAuthors().removeIf(currentAuthor -> !inputAuthorIds.contains(currentAuthor.getId()));
 
-            // Create new or add existing authors
+            // Create new or add existing authors - should be done in BookAuthorService
             dto.authors().forEach(author -> {
                 addNewAuthorToBook(author, entity.get());
             });
@@ -87,11 +87,8 @@ public class DefaultBookService implements BookService {
                 );
 
         if(isNewAuthorToBook) {
-            final var existingAuthor = authorService.getAuthorByNames(author.firstName(), author.lastName());
-            existingAuthor.ifPresentOrElse(
-                    book::addAuthor,
-                    () -> book.addAuthor(authorService.postAuthor(author))
-            );
+            final var authorToAdd = authorService.createIfAbsent(author);
+            book.addAuthor(authorToAdd);
         }
 
     }

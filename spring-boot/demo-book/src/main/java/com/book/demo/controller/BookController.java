@@ -45,7 +45,7 @@ public class BookController {
             @ApiResponse(responseCode = "200", description = "Return books found")
     )
     @GetMapping
-    ResponseEntity<List<BookDto>> getBooks() {
+    public ResponseEntity<List<BookDto>> getBooks() {
         return ResponseEntity.ok(service.getBooks().stream()
                 .map(mapper::toDto)
                 .collect(Collectors.toList())
@@ -58,7 +58,7 @@ public class BookController {
             @ApiResponse(responseCode = "400", description = "Bad request - param type,  validation...")
     })
     @PutMapping(ID_PATH_PARAM)
-    ResponseEntity<BookDto> putBook(@PathVariable final long id, @RequestBody final BookDto dto) {
+    public ResponseEntity<BookDto> putBook(@PathVariable final long id, @RequestBody final BookDto dto) {
         return service.updateBook(id, dto)
                 .map(entity -> ResponseEntity.status(HttpStatus.OK).body(mapper.toDto(entity)))
                 .orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).build());
@@ -70,7 +70,7 @@ public class BookController {
             @ApiResponse(responseCode = "400", description = "Bad request - param type,  validation...")
     })
     @PostMapping
-    ResponseEntity<BookDto> postBook(@RequestBody final BookDto dto) {
+    public ResponseEntity<BookDto> postBook(@RequestBody final BookDto dto) {
         return ResponseEntity.status(HttpStatus.CREATED).body(mapper.toDto(service.postBook(dto)));
     }
 
@@ -80,7 +80,7 @@ public class BookController {
             @ApiResponse(responseCode = "400", description = "Bad request - param type...")
     })
     @GetMapping(ID_PATH_PARAM)
-    ResponseEntity<BookDto> getBook(@PathVariable final long id) {
+    public ResponseEntity<BookDto> getBook(@PathVariable final long id) {
         return service.getBookById(id)
                 .map(entity -> ResponseEntity.status(HttpStatus.OK).body(mapper.toDto(entity)))
                 .orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).build());
@@ -92,8 +92,8 @@ public class BookController {
             @ApiResponse(responseCode = "400", description = "Bad request - param type...")
     })
     @DeleteMapping(ID_PATH_PARAM)
-    ResponseEntity<BookDto> deleteBook(@PathVariable final long id) {
+    public ResponseEntity<BookDto> deleteBook(@PathVariable final long id) {
         service.deleteBook(id);
-        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+        return ResponseEntity.status(HttpStatus.OK).build();
     }
 }

@@ -1,0 +1,21 @@
+server:
+  port: 8080
+  servlet:
+    context-path: /reactive-author
+management:
+  endpoints:
+    web:
+      exposure:
+        include:
+          - health
+          - info
+
+spring:
+  application:
+    name: reactive-author
+  r2dbc:
+    url: r2dbc:h2:file:///C:/Users/gauth/Desktop/db-data/book # use book project tables - ddl-auto does not work, need flyway or liquibase to manage schema/table using r2dbc
+    username: sa
+    password: password
+    driverClassName: org.h2.Driver
+

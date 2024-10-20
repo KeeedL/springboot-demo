@@ -15,15 +15,20 @@ public class DefaultAuthorService implements AuthorService {
     private final AuthorRepository repository;
     private final AuthorMapper mapper;
 
-    public DefaultAuthorService(AuthorRepository repository, AuthorMapper mapper) {
+    public DefaultAuthorService(final AuthorRepository repository, final AuthorMapper mapper) {
         this.repository = repository;
         this.mapper = mapper;
     }
 
     @Override
-    public AuthorEntity postAuthor(AuthorDto dto) {
-        final var entity = mapper.toEntity(dto);
-        return repository.save(entity);
+    public Optional<AuthorEntity> postAuthor(final AuthorDto dto) {
+
+        final var isExisting = repository.existsByFirstNameAndLastName(dto.firstName(), dto.lastName());
+        if(!isExisting) {
+            final var entity = mapper.toEntity(dto);
+            return Optional.of(repository.save(entity));
+        }
+        return Optional.empty();
     }
 
     @Override
@@ -32,13 +37,23 @@ public class DefaultAuthorService implements AuthorService {
     }
 
     @Override
-    public Optional<AuthorEntity> getAuthorByNames(String firstName, String lastName) {
+    public Optional<AuthorEntity> getAuthorByNames(final String firstName, final String lastName) {
         return repository.findByFirstNameAndLastName(firstName, lastName);
     }
 
     @Override
-    public Optional<AuthorEntity> getAuthorById(long id) {
+    public Optional<AuthorEntity> getAuthorById(final long id) {
         return repository.findById(id);
+    }
+
+    @Override
+    public AuthorEntity createIfAbsent(final AuthorDto dto) {
+        final var existingAuthor = repository.findByFirstNameAndLastName(dto.firstName(), dto.lastName());
+        if(existingAuthor.isEmpty()) {
+            final var entity = mapper.toEntity(dto);
+            return repository.save(entity);
+        }
+        return existingAuthor.get();
     }
 
 }
