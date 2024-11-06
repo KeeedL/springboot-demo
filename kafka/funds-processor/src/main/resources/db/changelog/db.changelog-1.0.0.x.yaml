@@ -1,0 +1,56 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1
+      author: gabo
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  autoIncrement: true
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: PK_ACCOUNT_ID
+                  name: id
+                  type: BIGINT
+              - column:
+                  constraints:
+                    nullable: false
+                    constraintName: UK_ACCOUNT_Uuid
+                  name: uuid
+                  type: VARCHAR(64)
+              - column:
+                  name: amount
+                  type: DECIMAL(14, 2)
+                  defaultValueNumeric: 0
+            tableName: account
+
+  - changeSet:
+      id: 1.1
+      author: gabo
+      changes:
+        - addUniqueConstraint:
+            columnNames: uuid
+            constraintName: UK_ACCOUNT_Uuid
+            tableName: account
+
+  - changeSet:
+      id: 1.2
+      author: gabo
+      changes:
+        - loadData:
+            file: data/account.data.csv
+            tableName: account
+            relativeToChangelogFile: true
+            separator: ;
+            usePreparedStatements: true
+            header: true
+            columns:
+              - column:
+                  header: uuid
+                  type: VARCHAR(64)
+                  name: uuid
+              - column:
+                  header: amount
+                  type: DECIMAL(12, 2)
+                  name: amount

@@ -1,0 +1,22 @@
+server:
+  port: 8080
+  servlet:
+    context-path: /funds-processor
+spring:
+  application:
+    name: funds-processor
+  datasource:
+    url: jdbc:sqlserver://localhost:1433;databaseName=kafka_poc;encrypt=true;trustServerCertificate=true
+    username: SA
+    password: Passw0rd # Local credential only -- will be overridden by environment secrets on kubernetes deployment
+    driverClassName: com.microsoft.sqlserver.jdbc.SQLServerDriver
+  liquibase:
+    change-log: classpath:db/db.changelog.yaml
+    database-change-log-table: account_DATABASECHANGELOG
+    database-change-log-lock-table: account_DATABASECHANGELOGLOCK
+  kafka:
+    consumer:
+      bootstrap-servers: localhost:29092
+      group-id: transfer-money-group-processor
+      auto-offset-reset: earliest
+      enable-auto-commit: true

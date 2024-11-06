@@ -37,7 +37,7 @@ public class InventoryController {
     }
 
 
-    // Should not be there - useful for testing purpose
+    // Should not be there - there for testing purpose
 
     // custom method to show argument captor utility (test part)
     public void updateStockCustomMethod(Integer nb) {
@@ -46,7 +46,6 @@ public class InventoryController {
 
     // custom method to show parameterized test utility (test part)
     public boolean isValid(String input) {
-        // Exemple de regex qui n'accepte que des lettres (a-z, A-Z)
         return input != null && input.matches("[a-zA-Z]+");
     }
 }

@@ -1,0 +1,18 @@
+server:
+  port: 8081
+  servlet:
+    context-path: /web-gateway
+spring:
+  application:
+    name: web-gateway
+  kafka:
+    producer:
+      bootstrap-servers:
+        - localhost:29092
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+      properties:
+        spring:
+          json:
+            type:
+              mapping: link:com.gbocquet.webgateway.dto.TransferMoneyRequestDto

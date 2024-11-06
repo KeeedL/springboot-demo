@@ -28,7 +28,9 @@ inventory-service :
 - bean configuration
 - unit test
 
+spring-boot-reactive :
+- webflux
+- r2dbc
 
 TODO :
-- simple reactive project (storing data)
 - Kafka + avro
