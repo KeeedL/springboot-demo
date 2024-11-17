@@ -1,5 +1,5 @@
 server:
-  port: 8080
+  port: 8084
   servlet:
     context-path: /funds-processor
 spring:
@@ -18,5 +18,10 @@ spring:
     consumer:
       bootstrap-servers: localhost:29092
       group-id: transfer-money-group-processor
+      key-deserializer: io.confluent.kafka.serializers.KafkaAvroDeserializer
+      value-deserializer: io.confluent.kafka.serializers.KafkaAvroDeserializer
+      properties:
+        schema.registry.url: http://localhost:8081
+        specific.avro.reader: true
       auto-offset-reset: earliest
       enable-auto-commit: true

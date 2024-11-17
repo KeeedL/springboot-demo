@@ -1,4 +1,4 @@
-package com.gbocquet.webgateway;
+package com.demo.webgateway;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

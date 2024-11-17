@@ -1,13 +1,12 @@
-package com.gbocquet.webgateway.service;
+package com.kafka.demo.webgateway.service;
 
-
-import com.gbocquet.webgateway.dto.TransferMoneyRequestDto;
-import com.gbocquet.webgateway.infra.SendBalanceActionProcessor;
+import com.kafka.demo.webgateway.infra.SendBalanceActionProcessor;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import transfer.money.request.TransferMoneyRequestDto;
 
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;

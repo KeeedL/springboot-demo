@@ -1,14 +1,14 @@
-package com.gbocquet.fundsprocessor.controller;
+package com.kafka.demo.fundsprocessor.controller;
 
-import com.gbocquet.fundsprocessor.dto.AccountDto;
-import com.gbocquet.fundsprocessor.dto.request.TransferMoneyRequestDto;
-import com.gbocquet.fundsprocessor.service.AccountService;
+import com.kafka.demo.fundsprocessor.dto.AccountDto;
+import com.kafka.demo.fundsprocessor.service.AccountService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.HttpStatus;
+import transfer.money.request.TransferMoneyRequestDto;
 
 import java.util.Optional;
 
@@ -107,37 +107,6 @@ public class AccountControllerTest {
         // THEN
         assertEquals(HttpStatus.OK.value(), result.getStatusCode().value());
         verify(accountService, times(1)).withdrawMoneyOnAccount(UUID, AMOUNT);
-        assertEquals(MOCKED_ACCOUNT_DTO, result.getBody());
-    }
-
-    @Test
-    void transferAccountByUnknownUuidShouldReturnEmpty() {
-        // GIVEN
-        final var targetAccountUuid = "uuid2";
-        final var transferMoneyRequest = new TransferMoneyRequestDto(UUID, targetAccountUuid, AMOUNT);
-        when(accountService.transferMoneyToOtherAccount(any())).thenReturn(Optional.empty());
-
-        // WHEN
-        final var result = accountController.transferMoneyOnAccountByUuid(transferMoneyRequest);
-
-        // THEN
-        assertEquals(HttpStatus.NOT_FOUND.value(), result.getStatusCode().value());
-        verify(accountService, times(1)).transferMoneyToOtherAccount(transferMoneyRequest);
-    }
-
-    @Test
-    void transferAccountByKnownUuidShouldReturnOk() {
-        // GIVEN
-        final var targetAccountUuid = "uuid2";
-        final var transferMoneyRequest = new TransferMoneyRequestDto(UUID, targetAccountUuid, AMOUNT);
-        when(accountService.transferMoneyToOtherAccount(any())).thenReturn(Optional.of(MOCKED_ACCOUNT_DTO));
-
-        // WHEN
-        final var result = accountController.transferMoneyOnAccountByUuid(transferMoneyRequest);
-
-        // THEN
-        assertEquals(HttpStatus.OK.value(), result.getStatusCode().value());
-        verify(accountService, times(1)).transferMoneyToOtherAccount(transferMoneyRequest);
         assertEquals(MOCKED_ACCOUNT_DTO, result.getBody());
     }
 }

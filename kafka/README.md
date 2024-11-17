@@ -14,11 +14,13 @@ Funds-processor maintain the business logic around money transfer, transactions.
 Requirement : Docker, docker-compose
 
 Go to root folder of the project and execute the following commands, 
-it will run zookeeper, kafka broker 1, kafka ui, mssql servers :
+it will run zookeeper, kafka broker 1, kafka ui, mssql servers, schema-registry (avro) :
 
 ```
 docker-compose -f ./env/docker-compose.yml --env-file ./env/.env --project-name kafka-poc-infra up -d
 ```
+
+If, kafka broker
 
 ## Useful links 🔗
 One docker-compose ended successfully, you can use following links to facilitate use of different apps, 
@@ -31,8 +33,11 @@ visualize contracts and kafka messages :
 
 
 ## Tips :💡
-If you want to change code from apps and start them from your IDE rather than docker :   
-Delete the running containers and start them as you want (through IntelliJ, just run the main class)
+To generate TransferMoneyRequestDto that is used to produce and consume message on Transfer topic (through Avro), use following command on both web-gateway and funds-processor :
+```
+mvn clean install
+```
+
 
 ## Todo list  📝
 

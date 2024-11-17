@@ -1,6 +1,6 @@
-package com.gbocquet.fundsprocessor.service.processor;
+package com.kafka.demo.fundsprocessor.service.processor;
 
-import com.gbocquet.fundsprocessor.service.processor.withdrawal.DefaultWithdrawalProcessor;
+import com.kafka.demo.fundsprocessor.service.processor.withdrawal.DefaultWithdrawalProcessor;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;

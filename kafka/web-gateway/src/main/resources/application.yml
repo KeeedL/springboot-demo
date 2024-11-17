@@ -1,5 +1,5 @@
 server:
-  port: 8081
+  port: 8085
   servlet:
     context-path: /web-gateway
 spring:
@@ -9,10 +9,8 @@ spring:
     producer:
       bootstrap-servers:
         - localhost:29092
-      key-serializer: org.apache.kafka.common.serialization.StringSerializer
-      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+      key-serializer: io.confluent.kafka.serializers.KafkaAvroSerializer
+      value-serializer: io.confluent.kafka.serializers.KafkaAvroSerializer
       properties:
-        spring:
-          json:
-            type:
-              mapping: link:com.gbocquet.webgateway.dto.TransferMoneyRequestDto
+        schema.registry.url: http://localhost:8081
+

@@ -8,7 +8,7 @@
 		<version>3.2.3</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.gbocquet</groupId>
+	<groupId>com.demo</groupId>
 	<artifactId>web-gateway</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>web-gateway</name>
@@ -18,6 +18,10 @@
 		<maven.compiler.source>17</maven.compiler.source>
 		<maven.compiler.target>17</maven.compiler.target>
 		<version.spring-doc>2.0.4</version.spring-doc>
+		<version.spring-kafka>3.1.2</version.spring-kafka>
+		<version.apache-avro>1.12.0</version.apache-avro>
+		<version.avro-serializer>7.7.1</version.avro-serializer>
+		<version.avro-maven-plugin>1.12.0</version.avro-maven-plugin>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -37,6 +41,22 @@
 		<dependency>
 			<groupId>org.springframework.kafka</groupId>
 			<artifactId>spring-kafka</artifactId>
+			<version>${version.spring-kafka}</version>
+		</dependency>
+		<dependency>
+			<groupId>io.confluent</groupId>
+			<artifactId>kafka-avro-serializer</artifactId>
+			<version>${version.avro-serializer}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.avro</groupId>
+			<artifactId>avro</artifactId>
+			<version>${version.apache-avro}</version>
+		</dependency>
+		<dependency>
+			<groupId>io.confluent</groupId>
+			<artifactId>kafka-schema-registry-client</artifactId>
+			<version>${version.avro-serializer}</version>
 		</dependency>
 	</dependencies>
 
@@ -46,7 +66,30 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
+			<plugin>
+				<groupId>org.apache.avro</groupId>
+				<artifactId>avro-maven-plugin</artifactId>
+				<version>${version.avro-maven-plugin}</version>
+				<executions>
+					<execution>
+						<phase>generate-sources</phase>
+						<goals>
+							<goal>schema</goal>
+						</goals>
+						<configuration>
+							<sourceDirectory>${basedir}/src/main/avro</sourceDirectory>
+							<outputDirectory>${project.build.directory}/generated-sources/avro</outputDirectory>
+						</configuration>²
+					</execution>
+				</executions>
+			</plugin>
 		</plugins>
 	</build>
 
+	<repositories>
+		<repository>
+			<id>confluent</id>
+			<url>https://packages.confluent.io/maven/</url>
+		</repository>
+	</repositories>
 </project>

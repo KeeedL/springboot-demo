@@ -1,18 +1,18 @@
-package com.gbocquet.fundsprocessor.service;
+package com.kafka.demo.fundsprocessor.service;
 
-import com.gbocquet.fundsprocessor.dto.AccountDto;
-import com.gbocquet.fundsprocessor.dto.request.TransferMoneyRequestDto;
-import com.gbocquet.fundsprocessor.entity.AccountEntity;
-import com.gbocquet.fundsprocessor.mapper.AccountMapper;
-import com.gbocquet.fundsprocessor.repository.AccountRepository;
-import com.gbocquet.fundsprocessor.service.processor.deposit.DepositProcessor;
-import com.gbocquet.fundsprocessor.service.processor.withdrawal.WithdrawalProcessor;
+import com.kafka.demo.fundsprocessor.dto.AccountDto;
+import com.kafka.demo.fundsprocessor.entity.AccountEntity;
+import com.kafka.demo.fundsprocessor.mapper.AccountMapper;
+import com.kafka.demo.fundsprocessor.repository.AccountRepository;
+import com.kafka.demo.fundsprocessor.service.processor.deposit.DepositProcessor;
+import com.kafka.demo.fundsprocessor.service.processor.withdrawal.WithdrawalProcessor;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import transfer.money.request.TransferMoneyRequestDto;
 
 import java.util.Optional;
 
@@ -98,10 +98,10 @@ class DefaultAccountServiceTest {
         final var result = accountService.transferMoneyToOtherAccount(transferMoneyRequest);
 
         // THEN
-        verify(repository, times(1)).existsByUuid(transferMoneyRequest.getSourceAccountUuid());
-        verify(repository, times(1)).existsByUuid(transferMoneyRequest.getTargetAccountUuid());
-        verify(repository, times(1)).findByUuid(transferMoneyRequest.getSourceAccountUuid());
-        verify(repository, times(1)).findByUuid(transferMoneyRequest.getTargetAccountUuid());
+        verify(repository, times(1)).existsByUuid(String.valueOf(transferMoneyRequest.getSourceAccountUuid()));
+        verify(repository, times(1)).existsByUuid(String.valueOf(transferMoneyRequest.getTargetAccountUuid()));
+        verify(repository, times(1)).findByUuid(String.valueOf(transferMoneyRequest.getSourceAccountUuid()));
+        verify(repository, times(1)).findByUuid(String.valueOf(transferMoneyRequest.getTargetAccountUuid()));
         verify(depositProcessor, times(1)).processDepositAmount(MOCKED_ACCOUNT_ENTITY.getAmount(), transferMoneyRequest.getAmountToTransfer());
         verify(withdrawalProcessor, times(1)).processWithdrawalAmount(AMOUNT, transferMoneyRequest.getAmountToTransfer());
         verify(repository, times(2)).save(MOCKED_ACCOUNT_ENTITY);
