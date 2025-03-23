@@ -25,8 +25,7 @@ import static com.book.demo.constant.RestPathValue.ID_PATH_PARAM;
 @RestController
 @RequestMapping(
         value = AUTHOR_PATH,
-        produces = MediaType.APPLICATION_JSON_VALUE,
-        consumes = MediaType.APPLICATION_JSON_VALUE)
+        produces = MediaType.APPLICATION_JSON_VALUE)
 public class AuthorController {
 
     private final AuthorService service;
